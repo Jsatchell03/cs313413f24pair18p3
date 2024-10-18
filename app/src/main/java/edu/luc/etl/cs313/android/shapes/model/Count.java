@@ -20,6 +20,7 @@ public class Count implements Visitor<Integer> {
 
     @Override
     public Integer onGroup(final Group g) {
+//        TODO
         return g.getShapes().size();
     }
 
