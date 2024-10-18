@@ -31,17 +31,62 @@ public class Draw implements Visitor<Void> {
     @Override
     public Void onStrokeColor(final StrokeColor c) {
         paint.setColor(c.getColor());
-//        draw shape
-//        paint.set
+        String shapeName = c.getShape().getClass().getSimpleName();
+        switch(shapeName) {
+            case "Circle":
+                onCircle((Circle) c.getShape());
+                break;
+            case "Group":
+                onGroup((Group) c.getShape());
+                break;
+            case "Outline":
+                onOutline((Outline) c.getShape());
+                break;
+            case "Polygon":
+                onPolygon((Polygon) c.getShape());
+                break;
+            case "Rectangle":
+                onRectangle((Rectangle) c.getShape());
+                break;
+            case "Fill":
+                onFill((Fill) c.getShape());
+                break;
+            case "Location":
+                onLocation((Location) c.getShape());
+                break;
+        }
+        paint.setColor(0);
         return null;
     }
 
     @Override
     public Void onFill(final Fill f) {
         paint.setStyle(Style.FILL);
-//        Draw shape
+        String shapeName = f.getShape().getClass().getSimpleName();
+        switch(shapeName) {
+            case "Circle":
+                onCircle((Circle) f.getShape());
+                break;
+            case "Group":
+                onGroup((Group) f.getShape());
+                break;
+            case "Outline":
+                onOutline((Outline) f.getShape());
+                break;
+            case "Polygon":
+                onPolygon((Polygon) f.getShape());
+                break;
+            case "Rectangle":
+                onRectangle((Rectangle) f.getShape());
+                break;
+            case "StrokeColor":
+                onStrokeColor((StrokeColor) f.getShape());
+                break;
+            case "Location":
+                onLocation((Location) f.getShape());
+                break;
+        }
         paint.setStyle(Style.STROKE);
-//        Reset
         return null;
     }
 
@@ -73,6 +118,9 @@ public class Draw implements Visitor<Void> {
                 break;
             case "Rectangle":
                 onRectangle((Rectangle) l.getShape());
+                break;
+            case "StrokeColor":
+                onStrokeColor((StrokeColor) l.getShape());
                 break;
         }
         canvas.translate(-l.getX(), -l.getY());

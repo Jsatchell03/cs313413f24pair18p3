@@ -39,7 +39,6 @@ public class BoundingBox implements Visitor<Location> {
 
     @Override
     public Location onStrokeColor(final StrokeColor c) {
-
         return new Location(0, 0, c);
     }
 
@@ -50,6 +49,16 @@ public class BoundingBox implements Visitor<Location> {
 
     @Override
     public Location onPolygon(final Polygon s) {
-        return new Location(0, 0, s);
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxX = 0;
+        int maxY = 0;
+        for(Point point: s.getPoints()){
+            maxX = Math.max(point.getX(), maxX);
+            maxY = Math.max(point.getY(), maxY);
+            minY = Math.min(point.getY(), minY);
+            minX = Math.min(point.getX(), minX);
+        }
+        return new Location(minX, minY, new Rectangle(maxX- minX, maxY - minY ));
     }
 }
