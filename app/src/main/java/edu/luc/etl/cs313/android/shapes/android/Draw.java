@@ -1,6 +1,7 @@
 package edu.luc.etl.cs313.android.shapes.android;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import edu.luc.etl.cs313.android.shapes.model.*;
@@ -31,98 +32,31 @@ public class Draw implements Visitor<Void> {
     @Override
     public Void onStrokeColor(final StrokeColor c) {
         paint.setColor(c.getColor());
-        String shapeName = c.getShape().getClass().getSimpleName();
-        switch(shapeName) {
-            case "Circle":
-                onCircle((Circle) c.getShape());
-                break;
-            case "Group":
-                onGroup((Group) c.getShape());
-                break;
-            case "Outline":
-                onOutline((Outline) c.getShape());
-                break;
-            case "Polygon":
-                onPolygon((Polygon) c.getShape());
-                break;
-            case "Rectangle":
-                onRectangle((Rectangle) c.getShape());
-                break;
-            case "Fill":
-                onFill((Fill) c.getShape());
-                break;
-            case "Location":
-                onLocation((Location) c.getShape());
-                break;
-        }
-        paint.setColor(0);
+        c.getShape().accept(this);
+        paint.setColor(Color.BLACK);
         return null;
     }
 
     @Override
     public Void onFill(final Fill f) {
         paint.setStyle(Style.FILL);
-        String shapeName = f.getShape().getClass().getSimpleName();
-        switch(shapeName) {
-            case "Circle":
-                onCircle((Circle) f.getShape());
-                break;
-            case "Group":
-                onGroup((Group) f.getShape());
-                break;
-            case "Outline":
-                onOutline((Outline) f.getShape());
-                break;
-            case "Polygon":
-                onPolygon((Polygon) f.getShape());
-                break;
-            case "Rectangle":
-                onRectangle((Rectangle) f.getShape());
-                break;
-            case "StrokeColor":
-                onStrokeColor((StrokeColor) f.getShape());
-                break;
-            case "Location":
-                onLocation((Location) f.getShape());
-                break;
-        }
+        f.getShape().accept(this);
         paint.setStyle(Style.STROKE);
         return null;
     }
 
     @Override
     public Void onGroup(final Group g) {
-
+        for(Shape shape : g.getShapes()){
+            shape.accept(this);
+        }
         return null;
     }
 
     @Override
     public Void onLocation(final Location l) {
         canvas.translate(l.getX(), l.getY());
-        String shapeName = l.getShape().getClass().getSimpleName();
-        switch(shapeName) {
-            case "Circle":
-                onCircle((Circle) l.getShape());
-                break;
-            case "Fill":
-                onFill((Fill) l.getShape());
-                break;
-            case "Group":
-                onGroup((Group) l.getShape());
-                break;
-            case "Outline":
-                onOutline((Outline) l.getShape());
-                break;
-            case "Polygon":
-                onPolygon((Polygon) l.getShape());
-                break;
-            case "Rectangle":
-                onRectangle((Rectangle) l.getShape());
-                break;
-            case "StrokeColor":
-                onStrokeColor((StrokeColor) l.getShape());
-                break;
-        }
+        l.getShape().accept(this);
         canvas.translate(-l.getX(), -l.getY());
         return null;
     }
@@ -135,14 +69,16 @@ public class Draw implements Visitor<Void> {
 
     @Override
     public Void onOutline(Outline o) {
-
+        paint.setStyle(Style.STROKE);
+        o.getShape().accept(this);
         return null;
     }
 
     @Override
     public Void onPolygon(final Polygon s) {
-
-//        canvas.drawLines(s.getPoints(), paint);
+        for(int i =0; i < s.getPoints().size() -1 ; i++){
+            canvas.drawLine(s.getPoints().get(i).getX(), s.getPoints().get(i).getY(), s.getPoints().get(i + 1).getX(), s.getPoints().get(i + 1).getY(), paint);
+        }
         return null;
     }
 }
