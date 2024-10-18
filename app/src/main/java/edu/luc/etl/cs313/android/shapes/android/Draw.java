@@ -54,8 +54,7 @@ public class Draw implements Visitor<Void> {
     @Override
     public Void onLocation(final Location l) {
         canvas.translate(l.getX(), l.getY());
-        String shapeName = l.getShape().getClass().getName();
-        System.out.println(shapeName);
+        String shapeName = l.getShape().getClass().getSimpleName();
         switch(shapeName) {
             case "Circle":
                 onCircle((Circle) l.getShape());
@@ -76,7 +75,7 @@ public class Draw implements Visitor<Void> {
                 onRectangle((Rectangle) l.getShape());
                 break;
         }
-        canvas.translate(0, 0);
+        canvas.translate(-l.getX(), -l.getY());
         return null;
     }
 

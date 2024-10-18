@@ -34,22 +34,22 @@ public class BoundingBox implements Visitor<Location> {
 
     @Override
     public Location onRectangle(final Rectangle r) {
-
         return new Location(0, 0, new Rectangle(r.getWidth(), r.getHeight()));
     }
 
     @Override
     public Location onStrokeColor(final StrokeColor c) {
-        return null;
+
+        return new Location(0, 0, c);
     }
 
     @Override
     public Location onOutline(final Outline o) {
-        return null;
+        return new Location(0 ,0, o);
     }
 
     @Override
     public Location onPolygon(final Polygon s) {
-        return null;
+        return new Location(0, 0, s);
     }
 }
