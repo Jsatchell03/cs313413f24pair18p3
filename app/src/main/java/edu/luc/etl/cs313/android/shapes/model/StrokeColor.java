@@ -8,7 +8,7 @@ import android.graphics.Paint;
  */
 public class StrokeColor implements Shape {
 
-    // TODO entirely your job
+    // TODO
 
     private final int color;
     private final Shape shape;

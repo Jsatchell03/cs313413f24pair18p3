@@ -11,7 +11,7 @@ import edu.luc.etl.cs313.android.shapes.model.*;
  */
 public class Draw implements Visitor<Void> {
 
-    // TODO entirely your job (except onCircle)
+    // TODO
 
     private final Canvas canvas;
 

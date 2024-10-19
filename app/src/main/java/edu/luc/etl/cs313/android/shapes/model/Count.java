@@ -6,7 +6,7 @@ package edu.luc.etl.cs313.android.shapes.model;
  */
 public class Count implements Visitor<Integer> {
 
-    // TODO entirely your job
+    // TODO
 
     @Override
     public Integer onPolygon(final Polygon p) {
